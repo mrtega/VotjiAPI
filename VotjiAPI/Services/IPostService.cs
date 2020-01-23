@@ -9,12 +9,15 @@ namespace VotjiAPI.Services
 {
     public interface IPostService
     {
-        List<Post> GetPosts();
-        Post GetPostById(Guid postId);
+        Task<List<Post>> GetPostsAsync();
 
-        bool UpdatePost(Post postToUpdate);
+        Task<Post> GetPostByIdAsync(Guid postId);
 
-        bool DeletePost(Guid postId);
+        Task<bool> CreatePostAsync(Post post);
+
+        Task<bool> UpdatePostAsync(Post postToUpdate);
+
+        Task<bool> DeletePostAsync(Guid postId);
 
 
     }

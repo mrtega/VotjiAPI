@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using VotjiAPI.Domain;
 
 namespace VotjiAPI.Data
 {
@@ -12,5 +13,6 @@ namespace VotjiAPI.Data
             : base(options)
         {
         }
+        public DbSet<Post> Posts { get; set; }
     }
 }
