@@ -53,6 +53,9 @@ namespace VotjiAPI
             option.AddRedirect("^$", "swagger");
             app.UseRewriter(option);
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseAuthentication();
 
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
@@ -64,8 +67,7 @@ namespace VotjiAPI
                 options.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
             });
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            
             
 
             
