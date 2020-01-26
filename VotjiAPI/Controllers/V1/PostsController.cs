@@ -9,9 +9,12 @@ using VotjiAPI.Domain;
 using VotjiAPI.Contracts.V1.Requests;
 using VotjiAPI.Contracts.V1.Responses;
 using VotjiAPI.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace VotjiAPI.Controllers.V1
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostsController : Controller
     {
         private readonly IPostService _postService;

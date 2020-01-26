@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VotjiAPI.Options;
+using VotjiAPI.Services;
 
 namespace VotjiAPI.Installers
 {
@@ -22,6 +23,9 @@ namespace VotjiAPI.Installers
             var jwtSettings = new JwtSettings();
             configuration.Bind(key: nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
+
+            services.AddScoped<IIdentityService, IdentityService>();
+
             services.AddAuthentication(configureOptions: x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
