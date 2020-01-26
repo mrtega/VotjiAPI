@@ -24,6 +24,14 @@ namespace VotjiAPI.Controllers.V1
         {
             var authResponse = await _identityService.RegisterAsync(request.Email, request.Password);
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new AuthFailedResponse
+                {
+                    Errors = ModelState.Values.SelectMany(x => x.Errors.Select(xx => xx.ErrorMessage))
+                });
+            }
+
             if (!authResponse.Success)
             {
                 return BadRequest(new AuthFailedResponse
@@ -36,6 +44,28 @@ namespace VotjiAPI.Controllers.V1
             {
                 Token = authResponse.Token 
             });
+
+
+        }
+
+        [HttpPost(ApiRoutes.Identity.Login)]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
+        {
+            var authResponse = await _identityService.LoginAsync(request.Email, request.Password);
+
+            if (!authResponse.Success)
+            {
+                return BadRequest(new AuthFailedResponse
+
+                {
+                    Errors = authResponse.Errors
+                });
+            }
+            return Ok(new AuthSuccessResponse
+            {
+                Token = authResponse.Token
+            });
+
 
         }
     }
