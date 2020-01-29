@@ -71,7 +71,7 @@ namespace VotjiAPI.Services
             return GenerateAuthenticationResultForUser(user);
         }
 
-        private AuthenticationResult GenerateAuthenticationResultForUser(IdentityUser newUser)
+        private AuthenticationResult GenerateAuthenticationResultForUser(IdentityUser User)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
@@ -79,10 +79,10 @@ namespace VotjiAPI.Services
             {
                 Subject = new ClaimsIdentity(claims: new[]
                 {
-                    new Claim (type: JwtRegisteredClaimNames.Sub, value: newUser.Email),
+                    new Claim (type: JwtRegisteredClaimNames.Sub, value: User.Email),
                     new Claim (type: JwtRegisteredClaimNames.Jti, value: Guid.NewGuid().ToString()),
-                    new Claim (type: JwtRegisteredClaimNames.Email, value: newUser.Email),
-                    new Claim (type: "id", value: newUser.Id)
+                    new Claim (type: JwtRegisteredClaimNames.Email, value: User.Email),
+                    new Claim (type: "id", value: User.Id)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
